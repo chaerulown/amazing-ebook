@@ -28,56 +28,91 @@ class ItemBook extends StatelessWidget{
         subtitle: Text(book.subtitle, style: Theme.of(context).textTheme.subtitle1),
         hoverColor: Colors.blueAccent,
         tileColor: Colors.grey.shade100,
-        trailing: Text('\$'+book.price),
+        trailing: Text(book.price),
         onTap: _toDetail,
       )
     );
   }
 }
 
+class ListOfBooks extends StatefulWidget {
+  const ListOfBooks({super.key});
 
-class ListOfBooks extends StatelessWidget{
   @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
+  State<ListOfBooks> createState() => ListBookState();
+
+
+}
+
+class ListBookState extends State<ListOfBooks>{
+  Future _getListBook(){
     final Books b = Get.put(Books());
-    b.getBooks();
-    List<Book> listOfBook = b.listOfBook;
-
-    /*Map<String, dynamic> currentBook = b.listBook[0];
-
-    final Book book = Book(
-        title: currentBook['title'],
-        subtitle: currentBook['subtitle'],
-        isbn13: currentBook['isbn13'],
-        price: currentBook['price'],
-        image: currentBook['image'],
-        url: currentBook['url']
-    );*/
-
-
+    return b.getBooks();
+  }
+  
+  List<Widget> _buildList(List<Book> listOfBook){
     List<Widget> listItemBook = <Widget>[];
-    //int len = b.listBook.length;
-    int len = b.listOfBook.length;
 
-    if(len > 0){
-      for(int i=0;i<len;i++){
+    int len = listOfBook.length;
+
+    if(len > 0) {
+      for (int i = 0; i < len; i++) {
         debugPrint('tes => hehe');
         listItemBook.add(new ItemBook(book: listOfBook[i]));
       }
     }
-    
-    //listItemBook.add(new ItemBook(book: book));
+      
+    return listItemBook;
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(b.titleList),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(8),
-        children: listItemBook,
-      )
+        appBar: AppBar(
+          title: Text('List of Books'),
+        ),
+        body: FutureBuilder(
+          future: _getListBook(),
+          builder: (context,snapshot){
+            if(snapshot.hasData){
+              return ListView(
+                padding: const EdgeInsets.all(8),
+                children: _buildList(snapshot.data),
+              );
+            }else if (snapshot.hasError){
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Error: ${snapshot.error}'),
+                    TextButton(onPressed: ()=>{Get.back()}, child: Text('Back'))
+                  ],
+                ),
+              );
+            }else{
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: 60,
+                      height: 60,
+                      child: CircularProgressIndicator(),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 16),
+                      child: Text('Awaiting result...'),
+                    )
+                  ],
+                ),
+              );
+            }
+          },
+        )
     );
+
+
   }
 
 }
+

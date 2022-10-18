@@ -20,7 +20,7 @@ class Books extends GetxController{
   // late List<Map<String,dynamic>> listBook = List.generate(3, (index) => theBook, growable: true);
 
 
-  void getBooks() async {
+  Future<List<Book>> getBooks() async {
     ApiRequest apiRequest = ApiRequest();
     List? resdata = await apiRequest.getListBook();
     if(resdata is List){
@@ -37,6 +37,7 @@ class Books extends GetxController{
         ));
       }
     }
+    return this.listOfBook;
 
   }
 }
