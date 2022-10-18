@@ -10,8 +10,8 @@ class ItemBook extends StatelessWidget{
   final String overrideImageUrl = 'https://cdn3d.iconscout.com/3d/premium/thumb/book-4183205-3468959.png';
   const ItemBook({required this.book, super.key});
 
-  void _toDetail(){
-    Get.to(DetailBook());
+  void _toDetail(String id){
+    Get.to(DetailBook(id: id));
   }
 
   @override
@@ -29,7 +29,7 @@ class ItemBook extends StatelessWidget{
         hoverColor: Colors.blueAccent,
         tileColor: Colors.grey.shade100,
         trailing: Text(book.price),
-        onTap: _toDetail,
+        onTap: (){_toDetail(book.isbn13);},
       )
     );
   }

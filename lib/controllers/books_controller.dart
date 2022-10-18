@@ -3,10 +3,13 @@ import 'package:get/get.dart';
 import 'package:amazing_e_book/networking/api_request.dart';
 import 'package:amazing_e_book/models/books_model.dart';
 
+import '../models/book_detail_model.dart';
+
 
 class Books extends GetxController{
   String titleList = 'List of Books';
   List<Book> listOfBook = [];
+  late BookDetail bookDetail;
 
   // Map<String, dynamic> theBook = {
   //   'title': 'Microsoft Excel Data Analysis and Business Modeling, 7th Edition',
@@ -24,7 +27,6 @@ class Books extends GetxController{
     ApiRequest apiRequest = ApiRequest();
     List? resdata = await apiRequest.getListBook();
     if(resdata is List){
-      debugPrint('test=>OKEEEEEEEEEEEEEEEEEEEEEE');
       int len = resdata.length;
       for(int i=0;i<len;i++){
         this.listOfBook.add(new Book(
@@ -38,6 +40,16 @@ class Books extends GetxController{
       }
     }
     return this.listOfBook;
+
+  }
+
+  Future<BookDetail> getBookDetail(String id) async {
+    ApiRequest apiRequest = ApiRequest();
+    var resdata = await apiRequest.getBookDetail(id);
+
+    bookDetail = BookDetail.fromJson(resdata.data);
+
+    return this.bookDetail;
 
   }
 }

@@ -23,4 +23,15 @@ class ApiRequest{
       rethrow;
     }
   }
+  Future<dynamic> getBookDetail(String id) async {
+    try{
+      final Dio _dio = Dio()..options.baseUrl = this.baseUrl;
+      var resp = await _dio.get('books/'+id);
+      debugPrint('hasil => '+resp.data.toString());
+      return resp;
+    }catch(e){
+      print(e);
+      rethrow;
+    }
+  }
 }
