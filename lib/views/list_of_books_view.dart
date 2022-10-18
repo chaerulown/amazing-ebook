@@ -1,3 +1,4 @@
+import 'package:amazing_e_book/views/book_detail_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,9 @@ class ItemBook extends StatelessWidget{
   final String overrideImageUrl = 'https://cdn3d.iconscout.com/3d/premium/thumb/book-4183205-3468959.png';
   const ItemBook({required this.book, super.key});
 
+  void _toDetail(){
+    Get.to(DetailBook());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,9 @@ class ItemBook extends StatelessWidget{
         title: Text(book.title,style: Theme.of(context).textTheme.titleLarge),
         subtitle: Text(book.subtitle, style: Theme.of(context).textTheme.subtitle1),
         hoverColor: Colors.blueAccent,
-        trailing: Text('\$'+book.price)
+        tileColor: Colors.grey.shade100,
+        trailing: Text('\$'+book.price),
+        onTap: _toDetail,
       )
     );
   }
