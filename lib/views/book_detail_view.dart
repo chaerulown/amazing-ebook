@@ -50,7 +50,7 @@ class _DetailBookState extends State<DetailBook> {
                   child: Image(
                       height: 200,
                       image: NetworkImage(
-                          'https://cdn3d.iconscout.com/3d/premium/thumb/book-4183205-3468959.png')),
+                          bookDetail.image)),
                 )),
             Expanded(
                 flex: 6,
