@@ -45,10 +45,13 @@ class _DetailBookState extends State<DetailBook> {
           children: [
             Expanded(
                 flex: 4,
-                child: Image(
-                    height: 200,
-                    image: NetworkImage(
-                        'https://cdn3d.iconscout.com/3d/premium/thumb/book-4183205-3468959.png'))),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Image(
+                      height: 200,
+                      image: NetworkImage(
+                          'https://cdn3d.iconscout.com/3d/premium/thumb/book-4183205-3468959.png')),
+                )),
             Expanded(
                 flex: 6,
                 child: Container(
